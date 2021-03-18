@@ -16,3 +16,33 @@
 #출력
 친구 관계가 생길 때마다, 두 사람의 친구 네트워크에 몇 명이 있는지 구하는 프로그램을 작성하시오.
 """
+
+def find(x):
+    if x==parent[x]:
+        return x
+    else:
+        p=find(parent[x])
+        parent[x]=p
+        return parent[x]
+def union(x,y):
+    x=find(x)
+    y=find(y)
+    if x!=y: 
+        parent[y]=x
+        number[x]+=number[y]
+
+n=int(input())
+for _ in range(n):
+    parent=dict()
+    number=dict()
+    f=int(input())
+    for _ in range(f):
+        x,y=input().split()
+        if x not in parent:
+            parent[x]=x
+            number[x]=1
+        if y not in parent:
+            parent[y]=y
+            number[y]=1
+        union(x,y)
+        print(number[find(x)])
