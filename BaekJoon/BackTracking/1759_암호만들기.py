@@ -52,6 +52,7 @@ for elements in combinations(string,l):
     if count>=1 and l-count>= 2: #굳이 자음수 따로 계산안하고 '전체글자수-모음수' 로 해도됨
         print(''.join(elements))
 """
+
 #3 combination 직접 구현
 import copy
 result = []
@@ -60,6 +61,7 @@ visited = []
 def combination(array,length,index):
     if len(string) == length:
         result.append(copy.deepcopy(string))
+        print(result)
         return
     for i in range(index,len(array)):
         if i in visited:
@@ -69,12 +71,13 @@ def combination(array,length,index):
         combination(array,length,i+1)
         string.pop()
         visited.pop()
-        
+
 vowels = ('a','e','i','o','u')
-l,c = map(int,input().split())
-string = input().split(' ')
-string.sort()
-combination(string,1,0)
+l,c = map(int,input().split(' '))
+array = input().split(' ')
+array.sort()
+combination(array,l,0)
+print(result)
 for elements in result:
     count = 0
     for i in elements:
