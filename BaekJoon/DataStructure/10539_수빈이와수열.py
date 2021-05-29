@@ -13,6 +13,7 @@
 #출력
 첫째 줄에는 수열 A를 이루는 N개의 정수를 출력한다. (1 ≤ Ai ≤ 109)
 """
+"""
 n = int(input())
 array = list(map(int,input().split()))
 new_array = [0]*n
@@ -21,3 +22,12 @@ for i in range(n):
     new_array[i] = (i+1) * array[i] - data
     data = data + new_array[i]
 print(' '.join(map(str,new_array)))
+"""
+
+#2
+n, a = int(input()), list(map(int,input().split()))
+b = [a[0]]
+for i in range(1,n):
+    b.append(a[i]*(i+1) - sum(b))
+print(b)
+    
