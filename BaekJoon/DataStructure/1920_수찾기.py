@@ -34,7 +34,7 @@ for i in range(len(m)):
 
 print("\n".join(map(str,m)))
 """
-
+"""
 #2
 N=int(input())
 A=set(map(int,input().split()))
@@ -45,4 +45,16 @@ for i in m:
         print('0')
     else:
         print('1')
+"""
+#3 (06.04)
+n = int(input())
+A = set(map(int,input().split())) #set사용..
+m = int(input())
+B = list(map(int,input().split()))
+for i in range(m):
+    if B[i] in A:
+        print(1)
+    else:
+        print(0)
+
 
