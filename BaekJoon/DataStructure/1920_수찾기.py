@@ -46,6 +46,7 @@ for i in m:
     else:
         print('1')
 """
+"""
 #3 (06.04)
 n = int(input())
 A = set(map(int,input().split())) #set사용..
@@ -56,5 +57,12 @@ for i in range(m):
         print(1)
     else:
         print(0)
+"""
+#4
+n,a = int(input()), {i:1 for i in map(int,input().split())}
+m = input()
 
+for i in list(map(int,input().split())):
+    print(a.get(i,0))
+    #print(1 if i in A else 0)
 
