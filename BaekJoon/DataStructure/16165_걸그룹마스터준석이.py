@@ -18,6 +18,8 @@
 퀴즈의 종류가 0일 경우 해당 팀에 속한 멤버의 이름을 사전순으로 한 줄에 한 명씩 출력한다.
 퀴즈의 종류가 1일 경우 해당 멤버가 속한 팀의 이름을 출력한다.
 """
+
+"""
 n,m = map(int,input().split())
 members = []
 for i in range(n):
@@ -39,5 +41,24 @@ for i in range(m):
         for group, member in members:
             if name == member:
                 print(group)
-                
-        
+"""
+#2 딕셔너리 사용
+n,m = map(int,input().split())
+team_mem, mem_team = {},{}
+
+for i in range(n):
+    team_name, mem_num = input(), int(input())
+    team_mem[team_name] = []
+    for j in range(mem_num):
+        name = input()
+        team_mem[team_name].append(name)
+        mem_team[name] = team_name
+
+for i in range(m):
+    name = input()
+    quiz = int(input())
+    if quiz:
+        print(mem_team[name])
+    else:
+        for i in sorted(team_mem[name]):
+            print(i)
