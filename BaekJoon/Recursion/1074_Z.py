@@ -74,6 +74,8 @@ def solve(n,x,y):
 result=0
 n,r,c=map(int,input().split())
 solve(2**n,0,0)
+
+"""
 """
 #3 해결 : 재귀 접근 자체를 구하고자 하는 좌표영역 안에서만 실행하도록 조건문 추가
 import sys
@@ -100,3 +102,59 @@ def Z(row,col,size,val):
   
 
 Z(0,0,2**n,int((2**n)**2))
+"""
+
+"""
+
+#4 06.09 재시도
+import sys
+n,r,c=map(int,sys.stdin.readline().split())
+
+length = 2**n
+
+def Z(start_value, length, x,y):
+    cut = length/2
+    value = cut**2 #사분면의 한 덩어리 크기
+
+    #print('start : ',start_value)
+    #print('cut : ',cut)
+    #print('value : ',value)
+    if length == 1:
+        print(int(start_value))
+    else:
+        if x >= cut and y >= cut: #3
+            Z(start_value + value*3, cut, x-cut, y-cut)
+        elif x < cut and y >= cut: #2
+            Z(start_value + value*2, cut, x, y-cut)
+        elif x >= cut and y < cut: #1
+            Z(start_value + value, cut, x-cut, y)
+        elif x < cut and y < cut: #0
+            Z(start_value, cut, x, y)
+
+Z(0,length,c,r)
+
+"""
+
+#5 간단한 코드
+N,r,c = map(int,input().split())
+def Z(size,x,y):
+    if size==1:
+        return 0
+    size//=2
+    for i in range(2):
+        for j in range(2):
+            if x<size*(i+1) and y<size*(j+1):
+                return (i*2+j)*size*size + Z(size,x-size*i,y-size*j)
+print(Z(2**N,r,c))
+
+
+
+
+
+
+
+
+
+
+
+
