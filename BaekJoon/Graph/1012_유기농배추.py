@@ -22,6 +22,7 @@
 #출력
 각 테스트 케이스에 대해 필요한 최소의 배추흰지렁이 마리 수를 출력한다.
 """
+"""
 import sys
 sys.setrecursionlimit(10000)
 
@@ -55,3 +56,21 @@ for _ in range(case_num):
                 dfs(i,j)
                 result+=1
     print(result)
+"""
+#2 21-06-23
+n = int(input())
+
+for _ in range(n):
+    m,n,k = map(int,input().split())
+    arr = [[0]*m for _ in range(n)]
+    visited = [[False]*m for _ in range(n)]
+    for _ in range(k):
+        y,x = map(int,input().split())
+        arr[x][y]=1
+
+
+
+    for i in range(n):
+        for j in range(m):
+            
+    
