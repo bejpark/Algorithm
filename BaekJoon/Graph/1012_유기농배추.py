@@ -60,7 +60,7 @@ for _ in range(case_num):
 #2 21-06-23
 
 import sys
-sys.setrecursionlimit(10000)
+sys.setrecursionlimit(10000) #dfs로 할때 재귀깊이를 제한시켜야함
 num = int(input())
 
 
@@ -80,7 +80,7 @@ def dfs(x,y):
 
 for _ in range(num):
     m,n,k = map(int,input().split())
-    arr = [[0]*m for _ in range(n)]
+    arr = [[0]*m for _ in range(n)] #배열을 1씩 padding을 하여 dfs 진행하면 if로 조건 만들필요 없음.
     result = 0
     visited = [[False]*m for _ in range(n)]
     for _ in range(k):
