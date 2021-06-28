@@ -19,3 +19,144 @@
 #출력
 최대 5번 이동시켜서 얻을 수 있는 가장 큰 블록을 출력한다.
 """
+
+#1 문제1: 배열의 softcopy, deepcopy.. 문제2: 초기 상태에 max넣어놓기
+#하지만 코드가 좀 안이쁘다
+import sys
+sys.setrecursionlimit(50000)
+n = int(input())
+board = [list(map(int,input().split())) for i in range(n)]
+val = max(map(max,board))
+#print(board) 
+def arrange(direction,B):
+    Board = [item[:] for item in B]
+    if direction ==0:#위
+        for j in range(n):
+            tmp = []
+            for i in range(n):
+                if Board[i][j]!=0:
+                    tmp.append(Board[i][j])
+            for i in range(len(tmp)):
+                Board[i][j] = tmp[i]
+            for i in range(len(tmp),n):
+                Board[i][j] = 0
+    elif direction ==1:#아래
+        for j in range(n):
+            tmp = []
+            for i in range(n):
+                if Board[i][j]!=0:
+                    tmp.append(Board[i][j])
+            for i in range(n-len(tmp)):
+                Board[i][j] = 0
+            for i in range(n-len(tmp),n):
+                Board[i][j] = tmp[i-(n-len(tmp))]
+    elif direction ==2:#<-
+        for i in range(n):
+            tmp = []
+            for j in range(n):
+                if Board[i][j]!=0:
+                    tmp.append(Board[i][j])
+            for j in range(len(tmp)):
+                Board[i][j] = tmp[j]
+            for j in range(len(tmp),n):
+                Board[i][j] = 0        
+    elif direction ==3:#->
+        for i in range(n):
+            tmp = []
+            for j in range(n):
+                if Board[i][j]!=0:
+                    tmp.append(Board[i][j])
+            for j in range(n-len(tmp)):
+                Board[i][j] = 0
+            for j in range(n-len(tmp),n):
+                Board[i][j] = tmp[j-(n-len(tmp))]
+    return Board
+
+
+def update(direction,B):
+    Board = arrange(direction,B)
+    if direction == 0:
+        for i in range(n):
+            for j in range(1,n):
+                if Board[j][i] !=0 and Board[j][i] == Board[j-1][i]:
+                    Board[j-1][i] = Board[j-1][i]*2
+                    Board[j][i] = 0
+    elif direction ==1:
+        for i in range(n):
+            for j in range(n-2,-1,-1):
+                if Board[j][i] !=0 and Board[j][i] == Board[j+1][i]:
+                    Board[j+1][i] = Board[j+1][i]*2
+                    Board[j][i] = 0
+    elif direction ==2:
+        for i in range(n):
+            for j in range(1,n):
+                if Board[i][j] !=0 and Board[i][j] == Board[i][j-1]:
+                    Board[i][j-1] = Board[i][j-1]*2
+                    Board[i][j] = 0
+    elif direction ==3:
+        for i in range(n):
+            for j in range(n-2,-1,-1):
+                if Board[i][j] !=0 and Board[i][j] == Board[i][j+1]:
+                    Board[i][j+1] = Board[i][j+1]*2
+                    Board[i][j] = 0
+    result = arrange(direction,Board)
+    return result
+
+def dfs(B,count):
+    global val
+    BB = [item[:] for item in B]
+    if count == 5:
+        max_val = max(map(max,B))
+        #print(max_val)
+        if max_val > val:
+            val = max_val
+        #print(B)
+    else:
+        for i in range(4):
+            #print('go')
+            new = update(i,BB)
+            if new != B:
+                dfs(new,count+1)
+                
+
+dfs(board,0)
+print(val)
+
+
+"""
+#2 4가지 방향을 90도 회전하는 배열을 만들면서 진행
+from copy import deepcopy
+N = int(input())
+Board = [list(map(int,input().split())) for i in range(N)]
+
+
+def rotate90(Board,N):
+    NB = deepcopy(Board)
+    for i in range(N):
+        for j in range(N):
+            NB[j][N-i-1] = Board[i][j]
+    return NB
+
+def convert(lst,N):
+    new_list = [i for i in lst if i] #양수만 남긴다는 뜻
+    for i in range(1,len(new_list)):
+        if new_list[i-1] == new_list[i]:
+            new_list[i-1]*=2
+            new_list[i]=0
+    new_list = [i for i in new_list if i]
+    return new_list + [0]*(N-len(new_list))
+
+
+def dfs(N,Board,count):
+    ret = max([max(i) for i in Board])
+    if count ==0:
+        return ret
+    for _ in range(4):
+        X = [convert(i,N) for i in Board]
+        if X != Board:
+            ret = max(ret,dfs(N,X,count-1))
+
+        Board = rotate90(Board,N)
+    return ret
+print(dfs(N,Board,5))
+"""
