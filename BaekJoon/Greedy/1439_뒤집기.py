@@ -19,7 +19,8 @@
 #출력
 첫째 줄에 다솜이가 해야하는 행동의 최소 횟수를 출력한다.
 """
-
+"""
+#1
 card=input()
 before=int(card[0])
 if before==1:
@@ -39,3 +40,30 @@ print(min(ones,zeros))
 
 #before 대신
 #for i in range(len(data)) 로 접근하여 data[i]와 data[i+1]을 비교해도됨
+"""
+"""
+#2
+card = input()
+prev = card[0]
+if prev=='1':
+    one=1
+    zero=0
+else:
+    one=0
+    zero=1
+
+for i in card:
+    if i!=prev:
+        if i=='1':
+            one+=1
+        else:
+            zero+=1
+        prev = i
+print(min(zero,one))
+"""
+#3 바뀌는 수를 조사한 후 계산
+card, result = input(),0
+for i in range(1,len(card)):
+    if card[i]!=card[i-1]:
+        result+=1
+print((result+1)//2)
