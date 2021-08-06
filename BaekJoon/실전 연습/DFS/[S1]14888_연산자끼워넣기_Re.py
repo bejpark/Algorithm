@@ -30,3 +30,31 @@ N개의 수와 N-1개의 연산자가 주어졌을 때, 만들 수 있는 식의
 연산자를 어떻게 끼워넣어도 항상 -10억보다 크거나 같고, 10억보다 작거나 같은 결과가 나오는 입력만 주어진다.
 또한, 앞에서부터 계산했을 때, 중간에 계산되는 식의 결과도 항상 -10억보다 크거나 같고, 10억보다 작거나 같다.
 """
+#DFS
+n = int(input())
+arr = list(map(int,input().split()))
+ops = list(map(int,input().split()))
+max_val = -1000000000
+min_val = 10000000003
+def dfs(plus,minus,mult,div,count,val):
+    global max_val
+    global min_val
+    if count==n:
+        max_val = max(max_val,val)
+        min_val = min(min_val,val)
+    if plus>0:
+        dfs(plus-1,minus,mult,div,count+1,val+arr[count])
+    if minus>0:
+        dfs(plus,minus-1,mult,div,count+1,val-arr[count])
+    if mult>0:
+        dfs(plus,minus,mult-1,div,count+1,val*arr[count])
+    if div>0:
+        if val <0:
+            val = -(-val//arr[count])
+        else:
+            val = val//arr[count]
+        dfs(plus,minus,mult,div-1,count+1,val)
+    
+dfs(ops[0],ops[1],ops[2],ops[3],1,arr[0])
+print(max_val)
+print(min_val)

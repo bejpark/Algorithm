@@ -34,3 +34,22 @@ i\j    1    2    3    4
 #출력
 첫째 줄에 스타트 팀과 링크 팀의 능력치의 차이의 최솟값을 출력한다.
 """
+n = int(input())
+team = [[0]*4 for _ in range(n)]
+people = int((n*n-n)/2)
+couple = list()
+visited = [False for _ in range(people)]
+
+for i in range(n):
+    team[i] = list(map(int,input().split()))
+for i in range(n):
+    for j in range(0,i):
+        couple.append(team[i][j]+team[j][i])
+
+total = sum(couple)
+print(total)
+
+def dfs(visited, count, value):
+    v = visited[:]
+    if count == people/2:
+        result = min(abs(total-value-value),result)
