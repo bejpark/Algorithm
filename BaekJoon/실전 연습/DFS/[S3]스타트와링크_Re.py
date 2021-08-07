@@ -34,22 +34,36 @@ i\j    1    2    3    4
 #출력
 첫째 줄에 스타트 팀과 링크 팀의 능력치의 차이의 최솟값을 출력한다.
 """
-n = int(input())
+#재귀 이해 .. 시간 효율성 ..
+import sys
+sys.setrecursionlimit(100001)
+
+n = int(sys.stdin.readline())
 team = [[0]*4 for _ in range(n)]
-people = int((n*n-n)/2)
-couple = list()
-visited = [False for _ in range(people)]
-
+result = int(1e9)
+visited = [0 for _ in range(n)]
 for i in range(n):
-    team[i] = list(map(int,input().split()))
-for i in range(n):
-    for j in range(0,i):
-        couple.append(team[i][j]+team[j][i])
+    team[i] = list(map(int,sys.stdin.readline().split()))
 
-total = sum(couple)
-print(total)
+def dfs(idx,count):
+    global result
 
-def dfs(visited, count, value):
-    v = visited[:]
-    if count == people/2:
-        result = min(abs(total-value-value),result)
+    if count == n//2:
+        start,link = 0,0
+        for i in range(n):
+            for j in range(n):
+                if visited[i] and visited[j]:
+                    start +=team[i][j]
+                elif not visited[i] and not visited[j]:
+                    link += team[i][j]
+        result = min(result,abs(start-link))
+    else:
+        for i in range(idx,n):
+            if visited[i]: 
+                continue
+            visited[i] = 1
+            dfs(i+1,count+1)
+            visited[i] = 0
+
+dfs(0,0)
+print(result)
