@@ -26,3 +26,34 @@ i번째 줄의 j번째 수는 위에서부터 i번째 칸, 왼쪽에서부터 j�
 #출력
 첫째 줄에 테트로미노가 놓인 칸에 쓰인 수들의 합의 최댓값을 출력한다.
 """
+#ㅏ모양의 경우 생각, 더 효율적인 방법이 없을까 .....
+n,m = map(int,input().split())
+paper = [list(map(int,input().split())) for _ in range(n)]
+visited = [[0]*m for _ in range(n)]
+result = 0
+d = [(0,1),(0,-1),(1,0),(-1,0)]
+max_val = 0
+def find(x,y,val,count):
+    global max_val
+    if count==4:
+        max_val = max(max_val,val)
+        return
+    for a,b in d:
+        dx = x+a
+        dy = y+b
+        if 0<=dx<n and 0<=dy<m:
+            if not visited[dx][dy]:
+                visited[dx][dy]=1
+                if count==2: #예외인 ㅏ 모양 (다시돌아와야됨)
+                    find(x,y,val+paper[dx][dy],count+1)
+                find(dx,dy,val+paper[dx][dy],count+1)
+                visited[dx][dy]=0
+for i in range(n):
+    for j in range(m):
+        visited[i][j]=1
+        find(i,j,paper[i][j],1)
+        visited[i][j]=0
+print(max_val)
+
+
+    
